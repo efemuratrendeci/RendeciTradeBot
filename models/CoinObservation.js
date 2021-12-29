@@ -5,10 +5,10 @@ class CoinObservation {
     static bought_price = 0;
 
     static get is_buy_transaction_valid() {
-        return this.current_observation.length > 2 
+        return this.current_observation.length > 1 
             && this.last_observation.length > 0 
             && this.observation_route.slice(Math.max(this.observation_route.length - 3, 0)) === '--+'
-            && this.current_observation[this.current_observation.length - 3] > this.current_observation[this.current_observation.length - 1] ? true : false
+            && this.last_observation[this.last_observation.length - 3] > this.current_observation[this.current_observation.length - 1] ? true : false
     }
 
     static get is_sell_transaction_valid() {
@@ -22,7 +22,7 @@ class CoinObservation {
         return this.observation_route 
             && this.observation_route[this.observation_route.length - 1] === '-' 
             && this.bought_price > this.current_observation[this.current_observation.length - 1] 
-            && this.current_observation[this.current_observation.length - 1] / this.bought_price < 0.995 ? true : false;
+            && this.current_observation[this.current_observation.length - 1] / this.bought_price < 0.99 ? true : false;
     }
 
     static get is_price_over_one_percent() {
