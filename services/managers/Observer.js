@@ -40,6 +40,7 @@ class Observer {
 
             console.log(`usd: ${Balance.usd}`);
             console.log(`coin: ${Balance.coin}`);
+            console.log(`now: ${Balance.coin ? Balance.coin * market_price : Balance.usd}`);
         }
 
 
