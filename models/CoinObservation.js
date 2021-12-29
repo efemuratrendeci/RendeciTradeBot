@@ -21,7 +21,7 @@ class CoinObservation {
         return this.observation_route 
             && this.observation_route[this.observation_route.length - 1] === '-' 
             && this.bought_price > this.current_observation[this.current_observation.length - 1] 
-            && this.current_observation[this.current_observation.length - 1] / this.bought_price < 0.991 ? true : false;
+            && this.current_observation[this.current_observation.length - 1] / this.bought_price < 0.995 ? true : false;
     }
 
     static reverseRoute = (up) => {
