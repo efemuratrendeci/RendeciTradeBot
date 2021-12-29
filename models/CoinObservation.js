@@ -5,13 +5,13 @@ class CoinObservation {
     static bought_price = 0;
 
     static get is_buy_transaction_valid() {
-        return this.observation_route.slice(Math.max(this.observation_route.length - 2, 0)) === '-+' 
+        return this.observation_route.slice(Math.max(this.observation_route.length - 3, 0)) === '--+' 
             && this.current_observation.length > 1 
             && this.last_observation.length > 0 ? true : false
     }
 
     static get is_sell_transaction_valid() {
-        return this.observation_route.slice(Math.max(this.observation_route.length - 2, 0)) === '+-' 
+        return this.observation_route.slice(Math.max(this.observation_route.length - 3, 0)) === '++-' 
             && this.current_observation.length > 1 
             && this.last_observation.length > 0 
             && this.current_observation[this.current_observation.length - 1] >= this.bought_price * 1.0035 ? true : false
