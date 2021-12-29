@@ -11,8 +11,6 @@ class CoinObservation {
     }
 
     static get is_sell_transaction_valid() {
-        console.log(`bought_price: ${this.bought_price}`);
-        console.log(`last: ${this.current_observation[this.current_observation.length - 1]}`);
         return this.observation_route.slice(Math.max(this.observation_route.length - 2, 0)) === '+-' 
             && this.current_observation.length > 1 
             && this.last_observation.length > 0 

@@ -1,4 +1,6 @@
+const fs = require('fs');
 const CoinObservation = require('../../models/CoinObservation');
+
 // const CoinGeckoApi = require('../CoinGeckoApi');
 const BinanceApi = require('../BinanceApi');
 
@@ -27,20 +29,31 @@ class Observer {
 
     static doTransaction = async () => {
         const _binanceApi = new BinanceApi();
-        const market_price = await _binanceApi.getCoinPrice('AVAX');
-        let result;
+        const market_price = await _binanceApi.getCoinPrice(process.env.COIN);
+
         if (this.addNewVal(market_price)) {
-            result = { current_observation: CoinObservation.current_observation, last_observation: CoinObservation.last_observation, for: CoinObservation.observation_route };
-            console.log({ current_observation: CoinObservation.current_observation, last_observation: CoinObservation.last_observation, for: CoinObservation.observation_route });
+            await _binanceApi.closeAllOpenOrders(process.env.COIN);
+
+            let free_balance = await _binanceApi.getFreeBalance();
+
+            if (CoinObservation.is_buy_transaction_valid && free_balance['USDT'] > 10 ) await _binanceApi.openBuyOrder(market_price, process.env.COIN, free_balance);
+            if (CoinObservation.is_sell_transaction_valid && free_balance[process.env.COIN]) await _binanceApi.openSellOrder(market_price, process.env.COIN, free_balance);
+            if (CoinObservation.is_price_lower_then_limit && free_balance[process.env.COIN]) await _binanceApi.openSellOrder(market_price, process.env.COIN, free_balance);
 
 
-            if (CoinObservation.is_buy_transaction_valid && Balance.usd) Balance.buy(market_price);
-            if (CoinObservation.is_sell_transaction_valid && Balance.coin) Balance.sell(market_price);
-            if (CoinObservation.is_price_lower_then_limit && Balance.coin) Balance.sell(market_price);
+            // let text = fs.readFileSync(`${process.cwd()}/observer.json`);
+            // if(!text) text = '[]';
 
-            console.log(`usd: ${Balance.usd}`);
-            console.log(`coin: ${Balance.coin}`);
-            console.log(`now: ${Balance.coin ? Balance.coin * market_price : Balance.usd}`);
+            // let data = JSON.parse(text);
+
+            // data.push({
+            //     observation: { current_observation: CoinObservation.current_observation, last_observation: CoinObservation.last_observation, for: CoinObservation.observation_route },
+            //     money: Balance.usd,
+            //     coin: Balance.coin,
+            //     money_unreal: Balance.coin ? Balance.coin * market_price : Balance.usd
+            // });
+
+            // fs.writeFileSync(`${process.cwd()}/observer.json`, JSON.stringify(data));
         }
 
 
@@ -48,8 +61,6 @@ class Observer {
 }
 
 class Balance {
-    static usd = 100;
-    static coin = 0;
     static buy = (from) => {
         CoinObservation.bought_price = from;
         Balance.coin = Balance.usd / from;

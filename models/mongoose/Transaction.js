@@ -11,9 +11,9 @@ const Model = connection.model(
     "transaction",
     new Schema({
         coin_name: String,
+        coin_price: String,
         coin_amount: String,
-        cash_amount: String,
-        currency: String,
+        usdt_price: String,
         is_sold: Boolean
     }, { strict: false }, "transaction"));
 

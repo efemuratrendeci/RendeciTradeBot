@@ -10,8 +10,15 @@ const Schema = mongoose.Schema;
 const Model = connection.model(
     "user_preference",
     new Schema({
-        coin_name: String,
-        lose_risk_rate: String
+        coin_name: {
+            type: String,
+            default: 'AVAX',
+            index: {
+                unique: true,
+            },
+        },
+        lose_risk_rate: String,
+        min_win_rate: String,
     }, { strict: false }, "user_preference"));
 
 module.exports = Model;

@@ -3,10 +3,8 @@ class AppInfo {
     static DB_URI = process.env.APPLICATION_MODE === 'prod' ? process.env.PROD_DB_URI : process.env.DEV_DB_URI;
     static DB_LOG_URI = process.env.APPLICATION_MODE === 'prod' ? process.env.PROD_LOG_DB_URI : process.env.DEV_LOG_DB_URI;
     static MONGODB_OPTIONS = {
-        useFindAndModify: false,
         useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true
+        useUnifiedTopology: true
     }
 }
 

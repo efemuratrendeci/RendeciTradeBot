@@ -17,6 +17,7 @@ const Model = connection.model(
             },
         },
         coin_amount: String,
-    }, { strict: false }, "user"));
+        usdt_amount: String
+    }, { strict: false }, "balance"));
 
 module.exports = Model;
