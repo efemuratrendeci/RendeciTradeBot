@@ -48,9 +48,6 @@ class Observer {
 
             // data.push({
             //     observation: { current_observation: CoinObservation.current_observation, last_observation: CoinObservation.last_observation, for: CoinObservation.observation_route },
-            //     money: Balance.usd,
-            //     coin: Balance.coin,
-            //     money_unreal: Balance.coin ? Balance.coin * market_price : Balance.usd
             // });
 
             // fs.writeFileSync(`${process.cwd()}/observer.json`, JSON.stringify(data));
