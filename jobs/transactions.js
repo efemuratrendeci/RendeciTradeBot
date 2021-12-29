@@ -1,10 +1,9 @@
 const cron = require('node-cron');
-const Observation = require('../services/managers/Observation');
+const Observer = require('../services/managers/Observer');
 
 const task = () => {
-    cron.schedule('* * * * *', async () => {
-        Observation.isSellActionNeeded();
-
+    cron.schedule('*/30 * * * * *', async () => {
+        Observer.doTransaction();
     });
 }
 

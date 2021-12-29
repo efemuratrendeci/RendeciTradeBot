@@ -10,6 +10,11 @@ class BinanceApi {
         this.balance = await this.#api.fetchFreeBalance();
         return this.balance;
     }
+
+    getCoinPrice = async (coin) => {
+        let response = await this.#api.fetchTicker(`${coin}/USDT`);
+        return response.bid;
+    }
 }
 
 module.exports = BinanceApi;
