@@ -57,9 +57,9 @@ class Observer {
             if (CoinObservation.is_price_over_one_percent) await _binanceApi.openSellOrder(market_price, process.env.COIN, free_balance);
 
 
-            // console.log({
-            //     observation: { current_observation: CoinObservation.current_observation, last_observation: CoinObservation.last_observation, for: CoinObservation.observation_route },
-            // });
+            console.log({
+                observation: { current_observation: CoinObservation.current_observation, last_observation: CoinObservation.last_observation, for: CoinObservation.observation_route },
+            });
 
             // let text = fs.readFileSync(`${process.cwd()}/observer.json`);
             // if(!text) text = '[]';

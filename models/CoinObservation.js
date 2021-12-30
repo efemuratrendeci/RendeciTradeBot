@@ -8,14 +8,14 @@ class CoinObservation {
         return this.current_observation.length > 1 
             && this.last_observation.length > 0 
             && this.observation_route.slice(Math.max(this.observation_route.length - 4, 0)) === '---+'
-            && this.last_observation[this.last_observation.length - 4] > this.current_observation[this.current_observation.length - 1] ? true : false
+            && this.last_observation[this.last_observation.length - 4] > this.current_observation[this.current_observation.length - 1] * 1.002 ? true : false
     }
 
     static get is_sell_transaction_valid() {
         return this.observation_route.slice(Math.max(this.observation_route.length - 2, 0)) === '+-' 
             && this.current_observation.length > 1 
             && this.last_observation.length > 0 
-            && this.current_observation[this.current_observation.length - 1] >= this.bought_price * 1.005 ? true : false
+            && this.current_observation[this.current_observation.length - 1] >= this.bought_price * 1.0042 ? true : false
     }
 
     static get is_price_lower_then_limit() {
