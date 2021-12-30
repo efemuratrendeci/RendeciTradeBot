@@ -8,7 +8,7 @@ class CoinObservation {
         return this.current_observation.length > 1 
             && this.last_observation.length > 0 
             && this.observation_route.slice(Math.max(this.observation_route.length - 4, 0)) === '---+'
-            && this.last_observation[this.last_observation.length - 4] > this.current_observation[this.current_observation.length - 1] * 1.002 ? true : false
+            && this.last_observation[this.last_observation.length - 4] > this.current_observation[this.current_observation.length - 1] * 1.001 ? true : false
     }
 
     static get is_sell_transaction_valid() {
