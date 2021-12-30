@@ -7,7 +7,7 @@ class CoinObservation {
     static get is_buy_transaction_valid() {
         return this.current_observation.length > 1 
             && this.last_observation.length > 0 
-            && this.observation_route.slice(Math.max(this.observation_route.length - 4, 0)) === '---+'
+            && this.observation_route.slice(Math.max(this.observation_route.length - 3, 0)) === '--+'
             && this.last_observation[this.last_observation.length - 3] > this.current_observation[this.current_observation.length - 1] ? true : false
     }
 
