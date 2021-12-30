@@ -2,7 +2,7 @@ const cron = require('node-cron');
 const Observer = require('../services/managers/Observer');
 
 const task = () => {
-    cron.schedule('*/2 * * * * *', async () => {
+    cron.schedule('* * * * * *', async () => {
         await Observer.doTransaction();
     });
 }
