@@ -12,7 +12,7 @@ class CoinObservation {
     }
 
     static get is_sell_transaction_valid() {
-        return this.observation_route.slice(Math.max(this.observation_route.length - 2, 0)) === '+-' 
+        return this.observation_route.slice(Math.max(this.observation_route.length - 3, 0)) === '++-' 
             && this.current_observation.length > 1 
             && this.last_observation.length > 0 
             && this.current_observation[this.current_observation.length - 1] >= this.bought_price * 1.0035 ? true : false
@@ -44,7 +44,7 @@ class CoinObservation {
 
     static continueRoute = () => {
         if(!this.observation_route) return;
-        if(this.observation_route.length > 30) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 2, 0));
+        if(this.observation_route.length > 30) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 5, 0));
 
         this.observation_route += this.observation_route[this.observation_route.length - 1];
     }

@@ -6,25 +6,40 @@ const BinanceApi = require('../BinanceApi');
 
 class Observer {
     static addNewVal = (val) => {
-        const is_new_value_added = true;
         let is_route_changed = false;
-        if (CoinObservation.current_observation.includes(val)) return !is_new_value_added;
+        if (CoinObservation.current_observation.includes(val)) return false;
 
         const length = CoinObservation.current_observation.length;
 
-        if (length > 1 && CoinObservation.current_observation[length - 1] > CoinObservation.current_observation[length - 2] && CoinObservation.current_observation[length - 1] > val) {
-            CoinObservation.reverseRoute(false);
-            is_route_changed = true;
-        }
-        if (length > 1 && CoinObservation.current_observation[length - 1] < CoinObservation.current_observation[length - 2] && CoinObservation.current_observation[length - 1] < val) {
-            CoinObservation.reverseRoute(true);
-            is_route_changed = true;
+        /**Grafik yönü değişimi olmuş olabilir kontrol edilmeli */
+        if (length > 1) {
+
+            if (CoinObservation.current_observation[length - 1] > CoinObservation.current_observation[length - 2] /**Hali hazırda ölçüm yönü yukarı ise */
+                && CoinObservation.current_observation[length - 1] > val /**Yeni gelen veri son verinin altında ise ivme aşağıya dönmüş */) {
+
+                if (CoinObservation.current_observation[length - 1] < val * 1.001 /**Yeni gelen veri eski veriden 5/10000 oranında aşağıda ise hiçbirşey değişmemiş demektir. Gözleme dahil edilmemeli */) return false;
+
+                CoinObservation.reverseRoute(false);
+                is_route_changed = true;
+            }
+
+
+            if (CoinObservation.current_observation[length - 1] < CoinObservation.current_observation[length - 2] /**Hali hazırda ölçüm yönü aşağı ise */
+                && CoinObservation.current_observation[length - 1] < val /**Yeni gelen veri son verinin üzerinde ise ivme yukarıya dönmüş */) {
+
+                if (CoinObservation.current_observation[length - 1] > val * 0.999 /**Yeni gelen veri eski veriden 5/10000 oranında yukarıda ise hiçbirşey değişmemiş demektir. Gözleme dahil edilmemeli */) return false;
+
+                CoinObservation.reverseRoute(true);
+                is_route_changed = true;
+            }
+
         }
 
         if (!is_route_changed) CoinObservation.continueRoute();
+
         CoinObservation.current_observation.push(val);
 
-        return is_new_value_added;
+        return true;
     }
 
     static doTransaction = async () => {
@@ -36,15 +51,15 @@ class Observer {
 
             let free_balance = await _binanceApi.getFreeBalance();
 
-            if (CoinObservation.is_buy_transaction_valid && free_balance['USDT'] > 10 ) await _binanceApi.openBuyOrder(market_price, process.env.COIN, free_balance);
+            if (CoinObservation.is_buy_transaction_valid && free_balance['USDT'] > 10) await _binanceApi.openBuyOrder(market_price, process.env.COIN, free_balance);
             if (CoinObservation.is_sell_transaction_valid && free_balance[process.env.COIN] >= 0.1) await _binanceApi.openSellOrder(market_price, process.env.COIN, free_balance);
             if (CoinObservation.is_price_lower_then_limit && free_balance[process.env.COIN] >= 0.1) await _binanceApi.openSellOrder(market_price, process.env.COIN, free_balance);
             if (CoinObservation.is_price_over_one_percent) await _binanceApi.openSellOrder(market_price, process.env.COIN, free_balance);
 
 
-            console.log({
-                    observation: { current_observation: CoinObservation.current_observation, last_observation: CoinObservation.last_observation, for: CoinObservation.observation_route },
-                });
+            // console.log({
+            //     observation: { current_observation: CoinObservation.current_observation, last_observation: CoinObservation.last_observation, for: CoinObservation.observation_route },
+            // });
 
             // let text = fs.readFileSync(`${process.cwd()}/observer.json`);
             // if(!text) text = '[]';
@@ -53,7 +68,7 @@ class Observer {
 
             // data.push({
             //     observation: { current_observation: CoinObservation.current_observation, last_observation: CoinObservation.last_observation, for: CoinObservation.observation_route },
-                        //     money: Balance.usd,
+            //     money: Balance.usd,
             //     coin: Balance.coin,
             //     money_unreal: Balance.coin ? Balance.coin * market_price : Balance.usd
             // });
