@@ -7,22 +7,22 @@ class CoinObservation {
     static get is_buy_transaction_valid() {
         return this.current_observation.length > 1 
             && this.last_observation.length > 0 
-            && this.observation_route.slice(Math.max(this.observation_route.length - 4, 0)) === '---+'
-            && this.last_observation[0] > this.current_observation[this.current_observation.length - 1] * 1.001 ? true : false
+            && this.observation_route.slice(Math.max(this.observation_route.length - 2, 0)) === '-+'
+            && this.last_observation[0] > this.current_observation[this.current_observation.length - 1] * 1.0035 ? true : false
     }
 
     static get is_sell_transaction_valid() {
         return this.observation_route.slice(Math.max(this.observation_route.length - 2, 0)) === '+-' 
             && this.current_observation.length > 1 
             && this.last_observation.length > 0 
-            && this.current_observation[this.current_observation.length - 1] >= this.bought_price * 1.0042 ? true : false
+            && this.current_observation[this.current_observation.length - 1] >= this.bought_price * 1.0045 ? true : false
     }
 
     static get is_price_lower_then_limit() {
         return this.observation_route 
             && this.observation_route[this.observation_route.length - 1] === '-' 
             && this.bought_price > this.current_observation[this.current_observation.length - 1] 
-            && this.current_observation[this.current_observation.length - 1] / this.bought_price <= 0.975 ? true : false;
+            && this.current_observation[this.current_observation.length - 1] <= this.bought_price * 0.975 ? true : false;
     }
 
     static get is_price_over_one_percent() {
@@ -37,14 +37,14 @@ class CoinObservation {
         this.current_observation = [];
         this.current_observation.push(lastest);
 
-        if(this.observation_route.length > 150) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 15, 0));
+        if(this.observation_route.length > 50) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 15, 0));
 
         this.observation_route += up ? '+' : '-'
     }
 
     static continueRoute = () => {
         if(!this.observation_route) return;
-        if(this.observation_route.length > 150) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 15, 0));
+        if(this.observation_route.length > 50) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 15, 0));
 
         this.observation_route += this.observation_route[this.observation_route.length - 1];
     }
