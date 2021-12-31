@@ -22,7 +22,7 @@ class CoinObservation {
         return this.observation_route 
             && this.observation_route[this.observation_route.length - 1] === '-' 
             && this.bought_price > this.current_observation[this.current_observation.length - 1] 
-            && this.current_observation[this.current_observation.length - 1] <= this.bought_price * 0.975 ? true : false;
+            && this.current_observation[this.current_observation.length - 1] <= this.bought_price * 0.9925 ? true : false;
     }
 
     static get is_price_over_one_percent() {
