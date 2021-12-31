@@ -37,14 +37,14 @@ class CoinObservation {
         this.current_observation = [];
         this.current_observation.push(lastest);
 
-        if(this.observation_route.length > 30) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 5, 0));
+        if(this.observation_route.length > 150) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 15, 0));
 
         this.observation_route += up ? '+' : '-'
     }
 
     static continueRoute = () => {
         if(!this.observation_route) return;
-        if(this.observation_route.length > 30) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 5, 0));
+        if(this.observation_route.length > 150) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 15, 0));
 
         this.observation_route += this.observation_route[this.observation_route.length - 1];
     }
