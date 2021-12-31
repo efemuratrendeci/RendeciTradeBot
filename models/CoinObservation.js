@@ -22,11 +22,11 @@ class CoinObservation {
         return this.observation_route 
             && this.observation_route[this.observation_route.length - 1] === '-' 
             && this.bought_price > this.current_observation[this.current_observation.length - 1] 
-            && this.current_observation[this.current_observation.length - 1] / this.bought_price <= 0.985 ? true : false;
+            && this.current_observation[this.current_observation.length - 1] / this.bought_price <= 0.975 ? true : false;
     }
 
     static get is_price_over_one_percent() {
-        return this.bought_price >= this.current_observation[this.current_observation.length - 1] * 1.01;
+        return this.bought_price >= this.current_observation[this.current_observation.length - 1] * 1.025;
     }
 
     static reverseRoute = (up) => {
@@ -37,7 +37,7 @@ class CoinObservation {
         this.current_observation = [];
         this.current_observation.push(lastest);
 
-        if(this.observation_route.length > 30) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 2, 0));
+        if(this.observation_route.length > 30) this.observation_route = this.observation_route.slice(Math.max(this.observation_route.length - 5, 0));
 
         this.observation_route += up ? '+' : '-'
     }
