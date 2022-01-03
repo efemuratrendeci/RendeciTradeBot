@@ -38,10 +38,7 @@ class BinanceApi {
             data.push({
                 message: error.message, on: 'buy', date: new Date().toISOString(),
                 coin_name: process.env.COIN,
-                coin_price: from,
-                coin_amount: balance['USDT'] / from,
-                usdt_price: balance['USDT'],
-                is_sold: false
+                coin_price: from
             });
 
             fs.writeFileSync(`${process.cwd()}/error.json`, JSON.stringify(data));
@@ -64,10 +61,7 @@ class BinanceApi {
             data.push({
                 message: error.message, on: 'sell', date: new Date().toISOString(),
                 coin_name: process.env.COIN,
-                coin_price: from,
-                coin_amount: balance['USDT'] / from,
-                usdt_price: balance['USDT'],
-                is_sold: false
+                coin_price: from
             });
 
             fs.writeFileSync(`${process.cwd()}/error.json`, JSON.stringify(data));
