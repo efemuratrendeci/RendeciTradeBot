@@ -8,21 +8,21 @@ class CoinObservation {
         return this.current_observation.length > 1 
             && this.last_observation.length > 0 
             && this.observation_route.slice(Math.max(this.observation_route.length - 2, 0)) === '-+'
-            && this.last_observation[0] > this.current_observation[this.current_observation.length - 1] * 1.005 ? true : false
+            && this.last_observation[0] >= this.current_observation[this.current_observation.length - 1] * 1.005 ? true : false
     }
 
     static get is_sell_transaction_valid() {
         return this.observation_route.slice(Math.max(this.observation_route.length - 2, 0)) === '+-' 
             && this.current_observation.length > 1 
             && this.last_observation.length > 0 
-            && this.current_observation[this.current_observation.length - 1] >= this.bought_price * 1.003 ? true : false
+            && this.current_observation[this.current_observation.length - 1] >= this.bought_price * 1.005 ? true : false
     }
 
     static get is_price_lower_then_limit() {
         return this.observation_route 
             && this.observation_route[this.observation_route.length - 1] === '-' 
             && this.bought_price > this.current_observation[this.current_observation.length - 1] 
-            && this.current_observation[this.current_observation.length - 1] <= this.bought_price * 0.997 ? true : false;
+            && this.current_observation[this.current_observation.length - 1] <= this.bought_price * 0.975 ? true : false;
     }
 
     static get is_price_over_one_percent() {
