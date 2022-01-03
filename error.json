@@ -1,1 +1,12 @@
-[]
+[
+    {
+        "message": "binance Account has insufficient balance for requested action.",
+        "on": "sell",
+        "date": "2022-01-03T03:34:04.350Z",
+        "coin_name": "AVAX",
+        "coin_price": 111.64,
+        "coin_amount": 0.005961870745252598,
+        "usdt_price": 0.66558325,
+        "is_sold": false
+    }
+]
