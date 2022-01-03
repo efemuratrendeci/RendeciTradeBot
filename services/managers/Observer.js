@@ -17,7 +17,7 @@ class Observer {
             if (CoinObservation.current_observation[length - 1] > CoinObservation.current_observation[length - 2] /**Hali hazırda ölçüm yönü yukarı ise */
                 && CoinObservation.current_observation[length - 1] > val /**Yeni gelen veri son verinin altında ise ivme aşağıya dönmüş */) {
 
-                if (CoinObservation.current_observation[length - 1] < val * 1.002 /**Yeni gelen veri eski veriden 25/10000 oranında aşağıda ise hiçbirşey değişmemiş demektir. Gözleme dahil edilmemeli */) return false;
+                if (CoinObservation.current_observation[length - 1] < val * 1.0035 /**Yeni gelen veri eski veriden 25/10000 oranında aşağıda ise hiçbirşey değişmemiş demektir. Gözleme dahil edilmemeli */) return false;
 
                 CoinObservation.reverseRoute(false);
                 is_route_changed = true;
@@ -27,7 +27,7 @@ class Observer {
             if (CoinObservation.current_observation[length - 1] < CoinObservation.current_observation[length - 2] /**Hali hazırda ölçüm yönü aşağı ise */
                 && CoinObservation.current_observation[length - 1] < val /**Yeni gelen veri son verinin üzerinde ise ivme yukarıya dönmüş */) {
 
-                if (CoinObservation.current_observation[length - 1] > val * 0.998 /**Yeni gelen veri eski veriden 25/10000 oranında yukarıda ise hiçbirşey değişmemiş demektir. Gözleme dahil edilmemeli */) return false;
+                if (CoinObservation.current_observation[length - 1] > val * 0.9965 /**Yeni gelen veri eski veriden 25/10000 oranında yukarıda ise hiçbirşey değişmemiş demektir. Gözleme dahil edilmemeli */) return false;
 
                 CoinObservation.reverseRoute(true);
                 is_route_changed = true;
